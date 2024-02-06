@@ -89,6 +89,7 @@ body {
     display: block;
     margin-bottom: 5px;
     text-decoration: underline;
+    color:#031318;
   }
   #forgot-pass {
     color: rgb(0, 0, 0);
