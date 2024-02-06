@@ -11,6 +11,12 @@ body {
     background: url(banner.gif) no-repeat center center fixed;
     background-size: cover;
   }
+@media only screen and (max-width: 414px) {
+    body {
+        background: url(clouds.gif) no-repeat center center fixed;
+        background-size: cover;
+    }
+}
   .content {
     padding: 20px;
     color: #ffffff00;
